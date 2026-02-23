@@ -9,7 +9,7 @@
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
-  background:linear-gradient(135deg,#ffffff,#f1f3f5);
+  background:white;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -23,7 +23,7 @@ body{
   background:white;
   padding:30px;
   border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
   width:90%;
   max-width:400px;
   position:relative;
@@ -77,16 +77,16 @@ button{
 
 <body>
 
-<!-- PAGE 1 -->
+<!-- Page 1 -->
 <div class="container" id="page1">
   <h2>Will you forgive me? 🤍</h2>
-  <button class="yes" onclick="startAnimation()">YES 🤍</button>
+  <button class="yes" onclick="start()">YES 🤍</button>
   <button class="no" onmouseover="moveNo()">NO</button>
 </div>
 
-<!-- PAGE 2 -->
+<!-- Page 2 -->
 <div class="container hidden" id="page2">
-  <h1 class="bigText" id="mainText"></h1>
+  <h1 class="bigText" id="titleText"></h1>
   <p id="typing"></p>
 </div>
 
@@ -99,39 +99,37 @@ function moveNo(){
   btn.style.left=Math.random()*80+"%";
 }
 
-function startAnimation(){
+function start(){
   document.getElementById("page1").classList.add("hidden");
   document.getElementById("page2").classList.remove("hidden");
 
-  startHearts();
-  showSorry();
+  startFloating();
+  sequenceText();
 }
 
-function startHearts(){
+function startFloating(){
   setInterval(()=>{
-    const heart=document.createElement("div");
-    heart.innerText="🤍";
-    heart.style.position="fixed";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(Math.random()*25+15)+"px";
-    heart.style.animation="float 4s linear";
-    heart.style.zIndex="1";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),4000);
+    const items=["🤍","🦋"];
+    const element=document.createElement("div");
+    element.innerText=items[Math.floor(Math.random()*items.length)];
+    element.style.position="fixed";
+    element.style.left=Math.random()*100+"vw";
+    element.style.fontSize=(Math.random()*25+15)+"px";
+    element.style.animation="float 5s linear";
+    element.style.zIndex="1";
+    document.body.appendChild(element);
+    setTimeout(()=>element.remove(),5000);
   },400);
 }
 
-function showSorry(){
-  const text1="Sorry di buttu 🤍";
-  const text2="Love You 🤍";
-  const apology="I never meant to hurt you. You are important to me. I value you more than my ego. Please forgive me and let’s be happy again 🤍";
+function sequenceText(){
+  const title=document.getElementById("titleText");
+  const apology="Sorry di buttu 🤍... Love you da 🤍... Andha video varave illa... Atha na kandukama vituta... Manichiru di pondatti... Ummmahh 🤍";
 
-  const main=document.getElementById("mainText");
-
-  main.innerHTML=text1;
+  title.innerHTML="Sorry di buttu 🤍";
 
   setTimeout(()=>{
-    main.innerHTML=text2;
+    title.innerHTML="Love You 🤍";
   },2000);
 
   setTimeout(()=>{
@@ -139,13 +137,13 @@ function showSorry(){
   },4000);
 }
 
-function typeText(message){
+function typeText(text){
   let i=0;
   const target=document.getElementById("typing");
 
   function typing(){
-    if(i<message.length){
-      target.innerHTML+=message.charAt(i);
+    if(i<text.length){
+      target.innerHTML+=text.charAt(i);
       i++;
       setTimeout(typing,40);
     }
